@@ -10,6 +10,7 @@ export default function DayListItem({ name, spots, selected, setDay }) {
     'day-list__item--selected': selected,
     'day-list__item--full': spots === 0
   })
+  
   const formattedSpots =
     spots > 1
       ? spots + ' spots remaining'

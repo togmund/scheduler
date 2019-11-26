@@ -6,21 +6,25 @@ import classNames from 'classnames';
 
 export default function InterviewerListItem({ id, name, avatar, selected, setInterviewer }) {
 
-  const interviewersClass = classNames("interviewers__item", {
+  const interviewerClass = classNames("interviewers__item", {
     'interviewers__item--selected': selected
   })
-  const interviewersClassAvatar = classNames("interviewers__item-image", {
+  const interviewerAvatarClass = classNames("interviewers__item-image", {
     'interviewers__item-image--selected': selected
   })
 
   return (
-    <li className= {interviewersClass} >
+    <li
+      id={id}
+      className= {interviewerClass}
+      onClick={setInterviewer}
+      >
       <img
-        className= {interviewersClassAvatar}
+        className= {interviewerAvatarClass}
         src={avatar}
         alt={name}
       />
-      {name}
+      {selected ? name : ""}
     </li>
   );
 }

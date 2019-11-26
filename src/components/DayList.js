@@ -4,15 +4,15 @@ import DayListItem from "components/DayListItem";
 
 // import classNames from 'classnames';
 
-export default function DayList({ days, day, setDay }) {
+export default function DayList({ days, currentDay, setDay }) {
   return (
     <ul>
-      {days.map(d =>
+      {days.map(day =>
         <DayListItem
-          key={d.id}
-          name={d.name}
-          spots={d.spots}
-          selected={d.name === day}
+          key={day.id}
+          name={day.name}
+          spots={day.spots}
+          selected={day.name === currentDay}
           setDay={setDay} />
       )}
     </ul>
