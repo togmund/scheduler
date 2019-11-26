@@ -18,6 +18,9 @@ import Appointment from "components/Appointment/index";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
 
 // Mock Data
 
@@ -158,3 +161,8 @@ storiesOf("Appointment", module)
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
   .add("Show", () => <Show student={student} interviewer={interviewer} onEdit={action("onEdit")} onDelete={action("onDelete")} />)
+  .add("Confirm", () => <Confirm message="Delete the appointment?" onCancel={action("onCancel")} onConfirm={action("onConfirm")} />)
+  .add("Status Saving", () => <Status message="Saving" />)
+  .add("Status Deleting", () => <Status message="Deleting" />)
+  .add("Error Saving", () => <Error message="Could not save appointment." onClose={action("onClose")} />)
+  .add("Error Deleting", () => <Error message="Could not delete appointment." onClose={action("onClose")} />)
