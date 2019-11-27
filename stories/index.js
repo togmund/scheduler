@@ -57,10 +57,7 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
 
-const student = {
-  id: 1,
-  name: "Lydia Miller-Jones"
-};
+const student = "Lydia Miller-Jones"
 
 // Stories
 

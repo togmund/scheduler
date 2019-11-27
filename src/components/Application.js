@@ -15,10 +15,7 @@ const appointments = [
     id: 3,
     time: "1pm",
     interview: {
-      student: {
-        id: 2,
-        name: "Joe Montana"
-      },
+      student: "Joe Montana",
       interviewer: {
         id: 2,
         name: "Ted Ogggogoe",
@@ -30,10 +27,7 @@ const appointments = [
     id: 2,
     time: "2pm",
     interview: {
-      student: {
-        id: 1,
-        name: "Lydia Miller-Jones"
-      },
+      student: "Lydia Miller-Jones",
       interviewer: {
         id: 1,
         name: "Sylvia Palmer",
@@ -53,7 +47,7 @@ export default function Application(props) {
 
   useEffect(() => {
     axios
-      .get("/api/days")
+      .get("http://localhost:8001/api/days")
       .then((response) => {
         setDays(response.data);
       })
