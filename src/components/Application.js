@@ -49,13 +49,12 @@ export default function Application(props) {
 
   const [days, setDays] = useState([]);
   const [day, setDay] = useState(today);
-  const [appointments, setAppointments] = useState([]);
+  // const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     axios
       .get("/api/days")
       .then((response) => {
-        console.log(response.data);
         setDays(response.data);
       })
       .catch((error) => {
