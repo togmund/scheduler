@@ -1,41 +1,11 @@
 import React, { useState, useEffect } from "react";
 import DayList from "components/DayList";
 import axios from "axios";
+import getAppointmentsForDay from "helpers/selectors";
 
 import "components/Appointment"
 import "components/Application.scss";
 import Appointment from "components/Appointment";
-
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 3,
-    time: "1pm",
-    interview: {
-      student: "Joe Montana",
-      interviewer: {
-        id: 2,
-        name: "Ted Ogggogoe",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 2,
-    time: "2pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  }
-];
 
 export default function Application(props) {
   const date = new Date();
@@ -67,6 +37,7 @@ export default function Application(props) {
         // setDays(response.data);
         console.log(state);
       })
+
       .catch((error) => {
         console.log(error);
       })
@@ -96,7 +67,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {appointments.map(appointment =>
+        {getAppointmentsForDay(state, state.day).map(appointment =>
           <Appointment key={appointment.id} {...appointment} />
         )}
           <Appointment key="last" time="5pm" />
