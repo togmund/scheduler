@@ -142,14 +142,14 @@ storiesOf("InterviewerList", module)
   .add("Initial", () => (
     <InterviewerList
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   ))
   .add("Preselected", () => (
     <InterviewerList
       interviewers={interviewers}
-      currentInterviewer={3}
-      setInterviewer={action("setInterviewer")}
+      value={3}
+      onChange={action("setInterviewer")}
     />
   ));
 
@@ -204,7 +204,7 @@ storiesOf("Appointment", module)
 
   .add("Edit Form", () =>
     <Form
-      propName=""
+      propName="Frank Rose"
       interviewers={interviewers}
       propCurrentInterviewer={1}
       onSave={action("onSave")}

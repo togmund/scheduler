@@ -23,7 +23,7 @@ export default function DayList({ interviewers, value, onChange }) {
             name={interviewer.name}
             avatar={interviewer.avatar}
             selected={interviewer.id === value}
-            setCurrentInterviewer={event => onChange(interviewer.id)} />
+            setInterviewer={event => onChange(interviewer.id)} />
         )}
       </ul>
     </section>
