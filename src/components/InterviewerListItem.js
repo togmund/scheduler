@@ -4,7 +4,7 @@ import "components/InterviewerListItem.scss";
 
 import classNames from 'classnames';
 
-export default function InterviewerListItem({ id, name, avatar, selected, setInterviewer }) {
+export default function InterviewerListItem({ name, avatar, selected, setInterviewer }) {
 
   const interviewerClass = classNames("interviewers__item", {
     'interviewers__item--selected': selected
@@ -15,7 +15,6 @@ export default function InterviewerListItem({ id, name, avatar, selected, setInt
 
   return (
     <li
-      id={id}
       className= {interviewerClass}
       onClick={setInterviewer}
       >
@@ -24,7 +23,7 @@ export default function InterviewerListItem({ id, name, avatar, selected, setInt
         src={avatar}
         alt={name}
       />
-      {selected ? name : ""}
+      {selected && name}
     </li>
   );
 }

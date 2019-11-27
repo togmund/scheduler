@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import "components/InterviewerList.scss";
 
-export default function DayList({ interviewers, currentInterviewer, onChange, value }) {
+export default function DayList({ interviewers, value, onChange }) {
 
   const interviewersClass = classNames("interviewers")
   const interviewersHeaderClass = classNames("interviewers__header")
@@ -22,8 +22,8 @@ export default function DayList({ interviewers, currentInterviewer, onChange, va
             key={interviewer.id}
             name={interviewer.name}
             avatar={interviewer.avatar}
-            selected={interviewer.id === currentInterviewer}
-            setInterviewer={event => onChange(interviewer.id)} />
+            selected={interviewer.id === value}
+            setCurrentInterviewer={event => onChange(interviewer.id)} />
         )}
       </ul>
     </section>

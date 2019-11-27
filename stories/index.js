@@ -21,6 +21,7 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 // Mock Data
 
@@ -156,13 +157,63 @@ storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
-  .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />)
-  .add("Header", () => <Header time="12pm" />)
-  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
-  .add("Show", () => <Show student={student} interviewer={interviewer} onEdit={action("onEdit")} onDelete={action("onDelete")} />)
-  .add("Confirm", () => <Confirm message="Delete the appointment?" onCancel={action("onCancel")} onConfirm={action("onConfirm")} />)
-  .add("Status Saving", () => <Status message="Saving" />)
-  .add("Status Deleting", () => <Status message="Deleting" />)
-  .add("Error Saving", () => <Error message="Could not save appointment." onClose={action("onClose")} />)
-  .add("Error Deleting", () => <Error message="Could not delete appointment." onClose={action("onClose")} />)
+
+  .add("Appointment", () =>
+    <Appointment />)
+
+  .add("Appointment with Time", () =>
+    <Appointment time="12pm" />)
+
+  .add("Header", () =>
+    <Header time="12pm" />)
+
+  .add("Empty", () =>
+    <Empty onAdd={action("onAdd")} />)
+
+  .add("Show", () =>
+    <Show
+      student={student}
+      interviewer={interviewer}
+      onEdit={action("onEdit")}
+      onDelete={action("onDelete")}
+    />)
+
+  .add("Confirm", () =>
+    <Confirm message="Delete the appointment?"
+      onCancel={action("onCancel")}
+      onConfirm={action("onConfirm")}
+    />)
+
+  .add("Status Saving", () =>
+    <Status message="Saving" />)
+
+  .add("Status Deleting", () =>
+    <Status message="Deleting" />)
+
+  .add("Error Saving", () =>
+    <Error
+      message="Could not save appointment."
+      onClose={action("onClose")}
+    />)
+
+  .add("Error Deleting", () =>
+    <Error
+      message="Could not delete appointment."
+      onClose={action("onClose")}
+    />)
+
+  .add("Edit Form", () =>
+    <Form
+      propName=""
+      interviewers={interviewers}
+      propCurrentInterviewer={1}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />)
+
+  .add("Create Form", () =>
+    <Form
+      interviewers={interviewers}
+      onSave={action("onSave")}
+      onCancel={action("onCancel")}
+    />)
