@@ -17,16 +17,13 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
     interview ? SHOW : EMPTY
   );
 
-  console.log("interview:", interview, id, mode);
-
   function save(name, interviewer) {
-    console.log(name, interviewer)
     const interview = {
       student: name,
       interviewer
     };
     bookInterview(id, interview).then(() => {
-      console.log("then transition please")
+      console.log(`I have state, now transition!`)
       transition(SHOW)
     });
   }
