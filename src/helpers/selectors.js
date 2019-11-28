@@ -6,3 +6,10 @@ export default function getAppointmentsForDay (state, day) {
     filteredDays[0].appointments.forEach((e) => {output.push(state.appointments[e])})  
     return output};
 }
+
+export const getInterview = (state, interview) => {
+  if (!interview) {return null}
+  else {
+  return {...interview, interviewer:state.interviewers[interview.interviewer]};
+  }
+}
