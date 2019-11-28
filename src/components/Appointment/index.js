@@ -23,6 +23,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       interviewer
     };
     bookInterview(id,interview);
+    transition(SHOW);
   }
 
   return (
