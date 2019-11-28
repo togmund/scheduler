@@ -39,14 +39,12 @@ export default function Application(props) {
     ])
 
       .then((response) => {
-        console.log(response);
         setState(prev => ({
             ...state,
             days:response[0].data,
             appointments:response[1].data,
             interviewers:response[2].data
           }));
-        console.log(state);
       })
 
       .catch((error) => {
