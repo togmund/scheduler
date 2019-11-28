@@ -21,31 +21,31 @@ const today = stringDays[dateToday.getDay()];
 
 export default function Application(props) {
 
-const [state, setState] = useState({
-  day: today,
-  days: [],
-  appointments: {},
-  interviewers: {}
-});
+  const [state, setState] = useState({
+    day: today,
+    days: [],
+    appointments: {},
+    interviewers: {}
+  });
 
-const appointments = getAppointmentsForDay(state, state.day);
-const interviewers = getInterviewersForDay(state, state.day);
+  const appointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
 
-const schedule = appointments.map((appointment) => {
-  const interview = getInterview(state, appointment.interview);
-  return (
-    <Appointment
-      key={appointment.id}
-      id={appointment.id}
-      time={appointment.time}
-      interview={interview}
-      interviewers={interviewers}
-      bookInterview={bookInterview}
-    />
-  );
-});
+  const schedule = appointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+      />
+    );
+  });
 
-const setDay = day => setState(prev => ({ ...state, day }));
+  const setDay = day => setState(prev => ({ ...state, day }));
 
   useEffect(() => {
 
@@ -80,8 +80,8 @@ const setDay = day => setState(prev => ({ ...state, day }));
       ...state.appointments,
       [id]: appointment
     };
-    console.log(id, interview);
-    Promise.all([
+
+    return Promise.all([
       axios.get(`http://localhost:8001/api/appointments/`)
     ])
 

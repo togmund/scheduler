@@ -17,15 +17,20 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
     interview ? SHOW : EMPTY
   );
 
+  console.log("interview:", interview, id, mode);
+
   function save(name, interviewer) {
+    console.log(name, interviewer)
     const interview = {
       student: name,
       interviewer
     };
-    bookInterview(id,interview);
-    transition(SHOW);
+    bookInterview(id, interview).then(() => {
+      console.log("then transition please")
+      transition(SHOW)
+    });
   }
-    console.log("interview:",interview, id, mode);
+
   return (
     <article className="appointment">
       <Header time={time} />
@@ -39,8 +44,8 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       )}
       {mode === SHOW && (
         <Show
-          student={"interview.student"}
-          interviewer={"interview.interviewer"}
+          student={interview.student}
+          interviewer={interview.interviewer}
         />
       )}
     </article>
