@@ -8,7 +8,7 @@ import useVisualMode from "hooks/useVisualMode";
 import "components/Appointment/styles.scss";
 import Form from "./Form";
 
-export default function Appointment({ id, time, interview, onAdd }) {
+export default function Appointment({ id, time, interview, interviewers }) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -23,7 +23,7 @@ export default function Appointment({ id, time, interview, onAdd }) {
       {mode === EMPTY && <Empty onAdd={(event) => { transition(CREATE) }} />}
       {mode === CREATE && (
         <Form
-          interviewers={[]}
+          interviewers={interviewers}
           onSave={(event) => { transition() }}
           onCancel={(event) => { back() }}
         />
