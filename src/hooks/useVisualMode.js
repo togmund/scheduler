@@ -6,10 +6,12 @@ export default function useVisualMode(initial) {
 
   const transition = (newMode) => {
     setMode(newMode);
-    setHistory(newMode);
+    setHistory(prev => ([...history, newMode]));
   }
+
   const back = () => {
-    setMode(history);
+    history.pop()
+    setMode(history[history.length-1]);
   }
 
   return { mode, transition, back };
