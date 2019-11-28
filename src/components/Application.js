@@ -33,9 +33,9 @@ export default function Application(props) {
   useEffect(() => {
 
     Promise.all([
-      Promise.resolve(axios.get("http://localhost:8001/api/days")),
-      Promise.resolve(axios.get("http://localhost:8001/api/appointments")),
-      Promise.resolve(axios.get("http://localhost:8001/api/interviewers"))
+      axios.get("http://localhost:8001/api/days"),
+      axios.get("http://localhost:8001/api/appointments"),
+      axios.get("http://localhost:8001/api/interviewers")
     ])
 
       .then((response) => {
@@ -62,6 +62,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        onAdd=""
       />
     );
   });

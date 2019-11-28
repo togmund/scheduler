@@ -40,7 +40,7 @@ export default function Form({ propName, interviewers, propCurrentInterviewer, o
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={cancel}>Cancel</Button>
+          <Button danger onClick={onCancel}>Cancel</Button>
           <Button confirm onClick={onSave}>Save</Button>
         </section>
       </section>

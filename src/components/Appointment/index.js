@@ -3,20 +3,37 @@ import React from "react";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
+import useVisualMode from "hooks/useVisualMode";
 
 import "components/Appointment/styles.scss";
+import Form from "./Form";
 
-// import classNames from 'classnames';
+export default function Appointment({ id, time, interview, onAdd }) {
+  const EMPTY = "EMPTY";
+  const SHOW = "SHOW";
+  const CREATE = "CREATE";
 
-export default function Appointment({id, time, interview}) {
-  // const buttonClass = classNames();
+  const { mode, transition, back } = useVisualMode(
+    interview ? SHOW : EMPTY
+  );
 
   return (
     <article className="appointment">
-      <Header time={time}/>
-      {interview
-        ? <Show student={interview.student} interviewer={interview.interviewer}/>
-        : <Empty />}
-      </article>
+      <Header time={time} />
+      {mode === EMPTY && <Empty onAdd={(event) => { transition(CREATE) }} />}
+      {mode === CREATE && (
+        <Form
+          interviewers={[]}
+          onSave={(event) => { transition() }}
+          onCancel={(event) => { back() }}
+        />
+      )}
+      {mode === SHOW && (
+        <Show
+          student={interview.student}
+          interviewer={interview.interviewer}
+        />
+      )}
+    </article>
   );
 } 
