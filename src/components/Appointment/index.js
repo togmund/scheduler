@@ -8,7 +8,7 @@ import useVisualMode from "hooks/useVisualMode";
 import "components/Appointment/styles.scss";
 import Form from "./Form";
 
-export default function Appointment({ id, time, interview, interviewers }) {
+export default function Appointment({ id, time, interview, interviewers, bookInterview }) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -17,6 +17,14 @@ export default function Appointment({ id, time, interview, interviewers }) {
     interview ? SHOW : EMPTY
   );
 
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    bookInterview(id,interview);
+  }
+
   return (
     <article className="appointment">
       <Header time={time} />
@@ -24,7 +32,7 @@ export default function Appointment({ id, time, interview, interviewers }) {
       {mode === CREATE && (
         <Form
           interviewers={interviewers}
-          onSave={(event) => { transition() }}
+          onSave={save}
           onCancel={(event) => { back() }}
         />
       )}
