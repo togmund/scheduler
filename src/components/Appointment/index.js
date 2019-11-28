@@ -25,7 +25,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
     bookInterview(id,interview);
     transition(SHOW);
   }
-
+    console.log("interview:",interview, id, mode);
   return (
     <article className="appointment">
       <Header time={time} />
@@ -39,8 +39,8 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       )}
       {mode === SHOW && (
         <Show
-          student={interview.student}
-          interviewer={interview.interviewer}
+          student={"interview.student"}
+          interviewer={"interview.interviewer"}
         />
       )}
     </article>
