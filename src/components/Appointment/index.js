@@ -3,6 +3,7 @@ import React from "react";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
+import Status from "components/Appointment/Status";
 import useVisualMode from "hooks/useVisualMode";
 
 import "components/Appointment/styles.scss";
@@ -12,25 +13,26 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
+  const SAVING = "SAVING";
 
   const { mode, transition, back } = useVisualMode(
     interview ? SHOW : EMPTY
   );
 
   function save(name, interviewer) {
+    transition(SAVING);
     const interview = {
       student: name,
       interviewer
     };
     bookInterview(id, interview).then(() => {
-      console.log(`I have state, now transition!`)
-      transition(SHOW)
+      transition(SHOW);
     });
   }
-
   return (
     <article className="appointment">
       <Header time={time} />
+      {mode === SAVING && (<Status message={SAVING} />)}
       {mode === EMPTY && <Empty onAdd={(event) => { transition(CREATE) }} />}
       {mode === CREATE && (
         <Form

@@ -80,18 +80,16 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    
+
     return Promise.all([
       axios.put(`http://localhost:8001/api/appointments/${id}`,{interview})
     ])
 
       .then((response) => {
-        console.log(response)
         setState(prev => ({
           ...state,
           appointments
         }))
-        console.log("responded with state")
       })
 
       .catch((error) => {
