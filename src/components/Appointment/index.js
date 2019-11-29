@@ -42,17 +42,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
     });
   }
 
-  function editInterview(name, interviewer) {
-    transition(SAVING);
-    // const interview = {
-    //   student: name,
-    //   interviewer
-    // };
-    // updateInterview(id,interview).then(() => {
-    //   transition(SHOW);
-    // });
-  }
-
+  console.log("Index currentInterviewer:", id, interview)
   return (
     <article className="appointment">
       <Header time={time} />
@@ -71,7 +61,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
           student={interview.student}
           interviewer={interview.interviewer}
           onDelete={(event) => { transition(CONFIRM) }}
-          onEdit={(event) => { transition(EDIT) }}
+          onEdit={(event) => { console.log("Edited interviewer:",interview.interviewer); transition(EDIT); }}
         />
       )}
       {mode === CONFIRM && (

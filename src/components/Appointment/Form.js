@@ -17,7 +17,7 @@ export default function Form({ propName, interviewers, propCurrentInterviewer, o
       onCancel
     )
   }
-
+  console.log("propCurrentInterviewer",currentInterviewer);
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
