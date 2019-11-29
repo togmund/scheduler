@@ -3,7 +3,7 @@ import Button from "components/Button"
 
 // import classNames from 'classnames';
 
-export default function Confirm({ message, onCancel, onConfirm}) {
+export default function Confirm({ message, onCancel, onConfirm }) {
   // const buttonClass = classNames();
 
   return (
