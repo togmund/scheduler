@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import Button from "components/Button"
 import InterviewerList from "components/InterviewerList"
 
-export default function Form({ propName, interviewers, propCurrentInterviewer, onSave, onCancel }) {
+export default function Form({ propName, interviewers, propCurrentInterviewerId, onSave, onCancel }) {
 
   const [name, setName] = useState(propName || "");
-  const [currentInterviewer, setCurrentInterviewer] = useState(propCurrentInterviewer || null);
+  const [currentInterviewer, setCurrentInterviewer] = useState(propCurrentInterviewerId || null);
 
   const reset = () => {
     setName("")
@@ -17,6 +17,7 @@ export default function Form({ propName, interviewers, propCurrentInterviewer, o
       onCancel
     )
   }
+
   console.log("propCurrentInterviewer",currentInterviewer);
   return (
     <main className="appointment__card appointment__card--create">
@@ -34,7 +35,7 @@ export default function Form({ propName, interviewers, propCurrentInterviewer, o
         <InterviewerList
           interviewers={interviewers}
           value={currentInterviewer}
-          onChange={(event) => setCurrentInterviewer(event)}
+          onChange={(event) => {console.log("Selected Interviewer",event); setCurrentInterviewer(event)}}
         />
 
       </section>

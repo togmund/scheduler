@@ -73,7 +73,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       {mode === EDIT && (
         <Form
           propName={interview.student}
-          propCurrentInterviewer={interview.interviewer}
+          propCurrentInterviewerId={interview.interviewer.id}
           interviewers={interviewers}
           onSave={save}
           onCancel={(event) => { back() }}

@@ -10,6 +10,7 @@ export default function InterviewerList({ interviewers, value, onChange }) {
   const interviewersClass = classNames("interviewers")
   const interviewersHeaderClass = classNames("interviewers__header")
   const interviewersListClass = classNames("interviewers__list")
+  console.log(interviewers)
   console.log("valueInInterviewerList",value);
   return (
     <section className={interviewersClass}>
@@ -22,7 +23,7 @@ export default function InterviewerList({ interviewers, value, onChange }) {
             key={interviewer.id}
             name={interviewer.name}
             avatar={interviewer.avatar}
-            selected={interviewer.id === value.id}
+            selected={interviewer.id === value}
             setInterviewer={event => onChange(interviewer.id)} />
         )}
       </ul>
