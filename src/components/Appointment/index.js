@@ -18,6 +18,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
 
   const { mode, transition, back } = useVisualMode(
     interview ? SHOW : EMPTY
@@ -41,6 +42,17 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
     });
   }
 
+  function editInterview(name, interviewer) {
+    transition(SAVING);
+    // const interview = {
+    //   student: name,
+    //   interviewer
+    // };
+    // updateInterview(id,interview).then(() => {
+    //   transition(SHOW);
+    // });
+  }
+
   return (
     <article className="appointment">
       <Header time={time} />
@@ -59,6 +71,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
           student={interview.student}
           interviewer={interview.interviewer}
           onDelete={(event) => { transition(CONFIRM) }}
+          onEdit={(event) => { transition(EDIT) }}
         />
       )}
       {mode === CONFIRM && (
@@ -67,6 +80,14 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
           onCancel={(event) => { back() }}
           onConfirm={deleteInterview}
         />)}
+      {mode === EDIT && (
+        <Form
+          value={interview.student}
+          interviewers={interviewers}
+          onSave={save}
+          onCancel={(event) => { back() }}
+        />
+      )}
       {mode === DELETING && (<Status message={DELETING} />)}
 
     </article>
