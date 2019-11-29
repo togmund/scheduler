@@ -11,7 +11,7 @@ import useVisualMode from "hooks/useVisualMode";
 import "components/Appointment/styles.scss";
 import Form from "./Form";
 
-export default function Appointment({ id, time, interview, interviewers, bookInterview }) {
+export default function Appointment({ id, time, interview, interviewers, bookInterview, cancelInterview }) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -36,9 +36,9 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
 
   function deleteInterview() {
     transition(DELETING);
-    // cancelInterview(id, interview).then(() => {
-    //   transition(SHOW);
-    // });
+    cancelInterview(id).then(() => {
+      transition(EMPTY);
+    });
   }
 
   return (

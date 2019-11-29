@@ -41,7 +41,8 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
-      />
+        cancelInterview={cancelInterview}
+      /> 
     );
   });
 
@@ -89,6 +90,24 @@ export default function Application(props) {
         setState(prev => ({
           ...state,
           appointments
+        }))
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+
+  }
+
+  function cancelInterview(id) {
+
+    return Promise.all([
+      axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    ])
+
+      .then((response) => {
+        setState(prev => ({
+          ...state
         }))
       })
 
