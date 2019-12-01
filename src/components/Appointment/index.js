@@ -5,6 +5,7 @@ import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Status from "components/Appointment/Status";
 import Confirm from "components/Appointment/Confirm";
+import Error from "components/Appointment/Error";
 
 import useVisualMode from "hooks/useVisualMode";
 
@@ -36,7 +37,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       transition(SHOW);
     })
     .catch(() => {
-      transition(ERROR_SAVE);
+      transition(ERROR_SAVE, true);
     });
   }
 
@@ -47,7 +48,7 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
       transition(EMPTY);
     })
       .catch(() => {
-        transition(ERROR_DELETE);
+        transition(ERROR_DELETE, true);
       });
   }
 
@@ -64,7 +65,11 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
         />
       )}
       {mode === SAVING && (<Status message={SAVING} />)}
-
+      {mode === ERROR_SAVE && (
+        <Error
+          message={ERROR_SAVE}
+          onClose={(event) => { back() }}
+      />)}
       {mode === SHOW && (
         <Show
           student={interview.student}
@@ -89,6 +94,12 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
         />
       )}
       {mode === DELETING && (<Status message={DELETING} />)}
+      {mode === ERROR_DELETE && (
+        <Error
+          message={ERROR_DELETE}
+          onClose={(event) => { back() }}
+      />)}
+
 
     </article>
   );

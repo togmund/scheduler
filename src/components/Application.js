@@ -93,9 +93,9 @@ export default function Application(props) {
         }))
       })
 
-      .catch((error) => {
-        console.log(error);
-      });
+      // .catch((error) => {
+      //   console.log(error);
+      // });
 
   }
 
@@ -111,9 +111,9 @@ export default function Application(props) {
         }))
       })
 
-      .catch((error) => {
-        console.log(error);
-      });
+      // .catch((error) => {
+      //   console.log(error);
+      // });
 
   }
 
