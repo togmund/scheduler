@@ -16,7 +16,9 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
+  const ERROR_SAVE = "ERROR_SAVE";
   const DELETING = "DELETING";
+  const ERROR_DELETE = "ERROR_DELETE";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
 
@@ -32,14 +34,21 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
     };
     bookInterview(id, interview).then(() => {
       transition(SHOW);
+    })
+    .catch(() => {
+      transition(ERROR_SAVE);
     });
   }
 
   function deleteInterview() {
     transition(DELETING);
-    cancelInterview(id).then(() => {
+    cancelInterview(id)
+      .then(() => {
       transition(EMPTY);
-    });
+    })
+      .catch(() => {
+        transition(ERROR_DELETE);
+      });
   }
 
   console.log("Index currentInterviewer:", id, interview)
