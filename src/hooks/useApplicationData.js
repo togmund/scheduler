@@ -19,7 +19,6 @@ export default function useApplicationData() {
           axios.get("/api/interviewers")
         ])
           .then((response) => {
-            console.log(response)
             setState(prev => ({
               ...state,
               days: response[0].data,
