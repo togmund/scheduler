@@ -52,7 +52,7 @@ export default function Form({ propName, interviewers, propCurrentInterviewerId,
           />
 
 
-      </section>a
+      </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={()=> cancel()}>Cancel</Button>
