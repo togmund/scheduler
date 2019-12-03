@@ -7,7 +7,9 @@ import {
   getByText,
   prettyDOM,
   fireEvent,
-  getAllByTestId
+  getAllByTestId,
+  getByAltText,
+  getByPlaceholderText
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -20,12 +22,16 @@ afterEach(cleanup);
 
 describe("Form", () => {
   it("changes the schedule when a new day is selected", async () => {
+    // Render the Application
     const { getByText } = render(<Application />);
 
+    // Wait until Monday is displayed
     await waitForElement(() => getByText("Monday"));
 
+    // Click Tuesday
     fireEvent.click(getByText("Tuesday"));
 
+    // Observe that the expected Fixture is displayed
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 
@@ -39,13 +45,20 @@ describe("Form", () => {
     // Get the first empty appointment
     const appointments = getAllByTestId(container, "appointment");
     const appointment = appointments[0];
-    console.log(prettyDOM(appointment));
 
     // Click the "Add" button on the first empty appointment.
+    fireEvent.click(getByAltText(appointment, "Add"));
 
     // Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+
     // Click the first interviewer in the list.
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
     // Click the "Save" button on that same appointment.
+    // fireEvent.click(getByText(appointment, "Save"));
 
     // Check that the element with the text "Saving" is displayed.
     // Wait until the element with the text "Lydia Miller-Jones" is displayed.
