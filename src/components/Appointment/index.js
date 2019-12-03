@@ -42,7 +42,6 @@ export default function Appointment({ id, time, interview, interviewers, bookInt
     });
   }
 
-  console.log("Index currentInterviewer:", id, interview)
   return (
     <article className="appointment">
       <Header time={time} />

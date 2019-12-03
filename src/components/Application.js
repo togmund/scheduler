@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import DayList from "components/DayList";
-import axios from "axios";
 import getAppointmentsForDay, { getInterview, getInterviewersForDay } from "helpers/selectors";
+import useApplicationData from "hooks/useApplicationData";
 
 import "components/Appointment"
 import "components/Application.scss";
 import Appointment from "components/Appointment";
 
-const stringDays = {
-  0: "Sunday",
-  1: "Monday",
-  2: "Tuesday",
-  3: "Wednesday",
-  4: "Thursday",
-  5: "Friday",
-  6: "Saturday"
-}
-const dateToday = new Date();
-const today = stringDays[dateToday.getDay()];
-
 export default function Application(props) {
 
-  const [state, setState] = useState({
-    day: today,
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
 
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
@@ -45,77 +33,6 @@ export default function Application(props) {
       /> 
     );
   });
-
-  const setDay = day => setState(prev => ({ ...state, day }));
-
-  useEffect(() => {
-
-    Promise.all([
-      axios.get("http://localhost:8001/api/days"),
-      axios.get("http://localhost:8001/api/appointments"),
-      axios.get("http://localhost:8001/api/interviewers")
-    ])
-
-      .then((response) => {
-        setState(prev => ({
-          ...state,
-          days: response[0].data,
-          appointments: response[1].data,
-          interviewers: response[2].data
-        }));
-      })
-
-      .catch((error) => {
-        console.log(error);
-      })
-  }, []);
-
-  function bookInterview(id, interview) {
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    return Promise.all([
-      axios.put(`http://localhost:8001/api/appointments/${id}`,{interview})
-    ])
-
-      .then((response) => {
-        setState(prev => ({
-          ...state,
-          appointments
-        }))
-      })
-
-      .catch((error) => {
-        console.log(error);
-      });
-
-  }
-
-  function cancelInterview(id) {
-
-    return Promise.all([
-      axios.delete(`http://localhost:8001/api/appointments/${id}`)
-    ])
-
-      .then((response) => {
-        setState(prev => ({
-          ...state
-        }))
-      })
-
-      .catch((error) => {
-        console.log(error);
-      });
-
-  }
 
   return (
     <main className="layout">
