@@ -29,7 +29,7 @@ describe("Form", () => {
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 
-  it("laods data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+  it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     // Render the Application.
     const { container } = render(<Application />);
 
