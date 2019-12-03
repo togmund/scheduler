@@ -9,7 +9,8 @@ import {
   fireEvent,
   getAllByTestId,
   getByAltText,
-  getByPlaceholderText
+  getByPlaceholderText,
+  queryByText
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -62,9 +63,14 @@ describe("Form", () => {
 
     // Check that the element with the text "Saving" is displayed.
     expect(getByText(appointment, "SAVING")).toBeInTheDocument();
-    console.log(prettyDOM(appointment));
 
     // Wait until the element with the text "Lydia Miller-Jones" is displayed.
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "Monday")).toBeInTheDocument();
   });
 });
