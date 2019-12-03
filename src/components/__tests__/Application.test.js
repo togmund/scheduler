@@ -58,12 +58,13 @@ describe("Form", () => {
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
     // Click the "Save" button on that same appointment.
-    // fireEvent.click(getByText(appointment, "Save"));
+    fireEvent.click(getByText(appointment, "Save"));
 
     // Check that the element with the text "Saving" is displayed.
+    expect(getByText(appointment, "SAVING")).toBeInTheDocument();
+    console.log(prettyDOM(appointment));
+
     // Wait until the element with the text "Lydia Miller-Jones" is displayed.
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
-
-    return undefined;
   });
 });
