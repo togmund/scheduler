@@ -17,7 +17,7 @@ import {
 } from "@testing-library/react";
 
 import Application from "components/Application";
-import { debuggerStatement } from "@babel/types";
+import axios from "axios";
 
 beforeEach(() => {
   jest.mock("axios", () => require("../../__mocks__/axios"));
@@ -80,7 +80,7 @@ describe("Form", () => {
 
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     // Render the Application.
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     // Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -108,7 +108,7 @@ describe("Form", () => {
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 
-  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     // Render the Application.
     const { container, debug } = render(<Application />);
 
@@ -141,5 +141,76 @@ describe("Form", () => {
     );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
     debug();
+  });
+
+  it("shows the save error when failing to save an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
+
+    // Render the Application.
+    const { container } = render(<Application />);
+
+    // Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // Get the first empty appointment
+    const appointments = getAllByTestId(container, "appointment");
+    const appointment = appointments[0];
+
+    // Click the "Add" button on the first empty appointment.
+    fireEvent.click(getByAltText(appointment, "Add"));
+
+    // Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+
+    // Click the first interviewer in the list.
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
+    // Click the "Save" button on that same appointment.
+    fireEvent.click(getByText(appointment, "Save"));
+
+    // Check that the element with the text "Saving" is displayed.
+    expect(getByText(appointment, "SAVING")).toBeInTheDocument();
+
+    // Wait until the element with the text "Lydia Miller-Jones" is displayed.
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+
+    // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+  });
+
+  it("shows the delete error when failing to delete an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
+    // Render the Application.
+    const { container } = render(<Application />);
+
+    // Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // Click the "Delete" button on the booked appointment.
+    fireEvent.click(getByAltText(container, "Delete"));
+
+    // Check that the confirmation message is shown.
+    await waitForElement(() => getByText(container, "Confirm"));
+    expect(getByText(container, "CONFIRM")).toBeInTheDocument();
+
+    // Click the "Confirm" button on the confirmation.
+    fireEvent.click(getByText(container, "Confirm"));
+
+    // Check that the element with the text "DELETING" is displayed.
+    expect(getByText(container, "DELETING")).toBeInTheDocument();
+
+    // Wait until the element with the text "DELETING" button is removed.
+    await waitForElementToBeRemoved(() => getByText(container, "DELETING"));
+
+    // Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 });

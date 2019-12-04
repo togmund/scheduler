@@ -5,7 +5,6 @@ import Empty from "components/Appointment/Empty";
 import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
 import Status from "components/Appointment/Status";
-
 import useVisualMode from "hooks/useVisualMode";
 
 import "components/Appointment/styles.scss";
