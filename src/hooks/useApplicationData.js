@@ -9,7 +9,7 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
-  useEffect(() => {
+  const refreshState = () => {
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -26,6 +26,10 @@ export default function useApplicationData() {
       .catch(error => {
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    refreshState();
   }, []);
 
   const stateObject = {
@@ -44,20 +48,44 @@ export default function useApplicationData() {
         ...state.appointments,
         [id]: appointment
       };
+      const days = [
+        ...state.days.map(day => {
+          return day;
+        })
+      ];
       return Promise.all([
         axios.put(`/api/appointments/${id}`, { interview })
       ]).then(response => {
-        dispatch({ type: SET_INTERVIEW, appointments: appointments });
+        console.log(state.days);
+        dispatch({
+          type: SET_INTERVIEW,
+          appointments: appointments,
+          days: days
+        });
       });
     },
 
     cancelInterview: function cancelInterview(id) {
+      const appointment = {
+        ...state.appointments[id],
+        interview: null
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      const days = [
+        ...state.days.map(day => {
+          return day;
+        })
+      ];
       return Promise.all([axios.delete(`/api/appointments/${id}`)]).then(
         response => {
-          // setState(prev => ({
-          //   ...state
-          // }));
-          // dispatch({ type: SET_INTERVIEW, id, interview: null });
+          dispatch({
+            type: SET_INTERVIEW,
+            appointments: appointments,
+            days: days
+          });
         }
       );
     }
@@ -82,7 +110,12 @@ function reducer(state, action) {
         interviewers: action.interviewers
       };
     case SET_INTERVIEW: {
-      return { ...state, id: action.id, appointments: action.appointments };
+      return {
+        ...state,
+        id: action.id,
+        appointments: action.appointments,
+        days: action.days
+      };
     }
     default:
       throw new Error(
