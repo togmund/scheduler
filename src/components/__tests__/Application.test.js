@@ -9,7 +9,8 @@ import {
   getAllByTestId,
   getByAltText,
   getByPlaceholderText,
-  queryByText
+  queryByText,
+  waitForElementToBeRemoved
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -71,5 +72,35 @@ describe("Form", () => {
       queryByText(day, "Monday")
     );
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+  });
+
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    // Render the Application.
+    const { container, debug } = render(<Application />);
+
+    // Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // Click the "Delete" button on the booked appointment.
+    fireEvent.click(getByAltText(container, "Delete"));
+
+    // Check that the confirmation message is shown.
+    await waitForElement(() => getByText(container, "Confirm"));
+    expect(getByText(container, "CONFIRM")).toBeInTheDocument();
+
+    // Click the "Confirm" button on the confirmation.
+    fireEvent.click(getByText(container, "Confirm"));
+
+    // Check that the element with the text "DELETING" is displayed.
+    expect(getByText(container, "DELETING")).toBeInTheDocument();
+
+    // Wait until the element with the text "DELETING" button is removed.
+    await waitForElementToBeRemoved(() => getByText(container, "DELETING"));
+
+    // Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 });
