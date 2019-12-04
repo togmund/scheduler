@@ -18,7 +18,7 @@ export default function DayListItem({ name, spots, selected, setDay }) {
       : "no spots remaining";
 
   return (
-    <li data-testid="day" className={dayClass} onClick={() => setDay(name)}>
+    <li data-testid="day" className={dayClass} onClick={setDay}>
       <h2>{name}</h2>
       <h3>{formattedSpots}</h3>
     </li>

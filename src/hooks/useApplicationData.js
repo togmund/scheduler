@@ -50,6 +50,9 @@ export default function useApplicationData() {
       };
       const days = [
         ...state.days.map(day => {
+          if (day.appointments.includes(id)) {
+            return { ...(day.spots + 1) };
+          }
           return day;
         })
       ];
@@ -76,6 +79,9 @@ export default function useApplicationData() {
       };
       const days = [
         ...state.days.map(day => {
+          if (day.appointments.includes(id)) {
+            return { ...(day.spots - 1) };
+          }
           return day;
         })
       ];

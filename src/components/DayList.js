@@ -11,7 +11,7 @@ export default function DayList({ days, currentDay, setDay }) {
           name={day.name}
           spots={day.spots}
           selected={day.name === currentDay}
-          setDay={setDay}
+          setDay={event => setDay(day.name)}
         />
       ))}
     </ul>
