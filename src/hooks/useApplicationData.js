@@ -51,7 +51,7 @@ export default function useApplicationData() {
       const days = [
         ...state.days.map(day => {
           if (day.appointments.includes(id)) {
-            return { ...(day.spots + 1) };
+            return { ...day, spots: day.spots - 1 };
           }
           return day;
         })
@@ -59,7 +59,6 @@ export default function useApplicationData() {
       return Promise.all([
         axios.put(`/api/appointments/${id}`, { interview })
       ]).then(response => {
-        console.log(state.days);
         dispatch({
           type: SET_INTERVIEW,
           appointments: appointments,
@@ -80,7 +79,7 @@ export default function useApplicationData() {
       const days = [
         ...state.days.map(day => {
           if (day.appointments.includes(id)) {
-            return { ...(day.spots - 1) };
+            return { ...day, spots: day.spots + 1 };
           }
           return day;
         })
