@@ -90,9 +90,8 @@ export default {
   delete: jest.fn((url, id) => {
     if (url === `/api/appointments/${id}`) {
       return Promise.resolve({
-        status: 200,
-        statusText: "OK",
-        data: fixtures.interviewers
+        status: 204,
+        statusText: "No Content"
       });
     }
   })
