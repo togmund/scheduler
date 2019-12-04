@@ -5,7 +5,6 @@ import {
   cleanup,
   waitForElement,
   getByText,
-  prettyDOM,
   fireEvent,
   getAllByTestId,
   getByAltText,
@@ -71,6 +70,6 @@ describe("Form", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    expect(getByText(day, "Monday")).toBeInTheDocument();
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   });
 });
