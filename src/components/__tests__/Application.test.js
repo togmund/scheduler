@@ -10,10 +10,14 @@ import {
   getByAltText,
   getByPlaceholderText,
   queryByText,
-  waitForElementToBeRemoved
+  waitForElementToBeRemoved,
+  getByDisplayValue,
+  prettyDOM,
+  getByTestId
 } from "@testing-library/react";
 
 import Application from "components/Application";
+import { debuggerStatement } from "@babel/types";
 
 beforeEach(() => {
   jest.mock("axios", () => require("../../__mocks__/axios"));
@@ -104,5 +108,38 @@ describe("Form", () => {
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 
-  it("loads data, edits an interview and keeps the spots remaining for Monday the same", () => {});
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // Render the Application.
+    const { container, debug } = render(<Application />);
+
+    // Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // Click the "Edit" button on the booked appointment.
+    fireEvent.click(getByAltText(container, "Edit"));
+
+    // Check that "Archie Cohen" currently is the input value
+    fireEvent.change(getByTestId(container, "student-name-input"), {
+      target: { value: "Frank Rose" }
+    });
+
+    // Click the "Save" button on the confirmation.
+    fireEvent.click(getByText(container, "Save"));
+
+    // Check that the element with the text "SAVING" is displayed.
+    expect(getByText(container, "SAVING")).toBeInTheDocument();
+
+    // Wait until the element with the text "DELETING" button is removed.
+    await waitForElementToBeRemoved(() => getByText(container, "SAVING"));
+
+    // See if the name is Frank now.
+    expect(getByText(container, "Frank Rose")).toBeInTheDocument();
+
+    // Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+    debug();
+  });
 });

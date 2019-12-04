@@ -76,7 +76,6 @@ export default function Appointment({
             transition(CONFIRM);
           }}
           onEdit={event => {
-            console.log("Edited interviewer:", interview.interviewer);
             transition(EDIT);
           }}
         />
