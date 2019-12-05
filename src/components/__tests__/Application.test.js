@@ -144,8 +144,6 @@ describe("Form", () => {
   });
 
   it("shows the save error when failing to save an appointment", async () => {
-    axios.put.mockRejectedValueOnce();
-
     // Render the Application.
     const { container } = render(<Application />);
 
@@ -169,6 +167,7 @@ describe("Form", () => {
 
     // Click the "Save" button on that same appointment.
     fireEvent.click(getByText(appointment, "Save"));
+    axios.put.mockRejectedValueOnce();
 
     // Check that the element with the text "Saving" is displayed.
     expect(getByText(appointment, "SAVING")).toBeInTheDocument();
@@ -184,7 +183,6 @@ describe("Form", () => {
   });
 
   it("shows the delete error when failing to delete an appointment", async () => {
-    axios.put.mockRejectedValueOnce();
     // Render the Application.
     const { container } = render(<Application />);
 
@@ -200,6 +198,7 @@ describe("Form", () => {
 
     // Click the "Confirm" button on the confirmation.
     fireEvent.click(getByText(container, "Confirm"));
+    axios.put.mockRejectedValueOnce();
 
     // Check that the element with the text "DELETING" is displayed.
     expect(getByText(container, "DELETING")).toBeInTheDocument();
