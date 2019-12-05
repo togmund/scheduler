@@ -45,7 +45,7 @@ export default function useApplicationData() {
       dispatch({ type: SET_DAY, day: day });
     },
 
-    bookInterview: function bookInterview(id, interview) {
+    bookInterview: function bookInterview(id, interview, edit = false) {
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
@@ -56,7 +56,7 @@ export default function useApplicationData() {
       };
       const days = [
         ...state.days.map(day => {
-          if (day.appointments.includes(id)) {
+          if (day.appointments.includes(id) && !edit) {
             return { ...day, spots: day.spots - 1 };
           }
           return day;
@@ -65,11 +65,13 @@ export default function useApplicationData() {
       return Promise.all([
         axios.put(`/api/appointments/${id}`, { interview })
       ]).then(response => {
-        dispatch({
-          type: SET_INTERVIEW,
-          appointments: appointments,
-          days: days
-        });
+        if (response) {
+          dispatch({
+            type: SET_INTERVIEW,
+            appointments: appointments,
+            days: days
+          });
+        }
       });
     },
 
@@ -92,11 +94,13 @@ export default function useApplicationData() {
       ];
       return Promise.all([axios.delete(`/api/appointments/${id}`)]).then(
         response => {
-          dispatch({
-            type: SET_INTERVIEW,
-            appointments: appointments,
-            days: days
-          });
+          if (response) {
+            dispatch({
+              type: SET_INTERVIEW,
+              appointments: appointments,
+              days: days
+            });
+          }
         }
       );
     }

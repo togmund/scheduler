@@ -5,6 +5,7 @@ import Empty from "components/Appointment/Empty";
 import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
 import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
 import useVisualMode from "hooks/useVisualMode";
 
 import "components/Appointment/styles.scss";
@@ -25,25 +26,46 @@ export default function Appointment({
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERRORSAVING = "Could not save appointment.";
+  const ERRORDELETING = "Could not delete appointment.";
 
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   function save(name, interviewer) {
-    transition(SAVING);
     const interview = {
       student: name,
       interviewer
     };
-    bookInterview(id, interview).then(() => {
-      transition(SHOW);
-    });
+    if (mode === EDIT) {
+      transition(SAVING, true);
+      bookInterview(id, interview, true)
+        .then(() => {
+          transition(SHOW);
+        })
+        .catch(() => {
+          transition(ERRORSAVING, true);
+        });
+    } else {
+      transition(SAVING, true);
+      bookInterview(id, interview)
+        .then(() => {
+          transition(SHOW);
+        })
+        .catch(() => {
+          transition(ERRORSAVING, true);
+        });
+    }
   }
 
   function deleteInterview() {
-    transition(DELETING);
-    cancelInterview(id).then(() => {
-      transition(EMPTY);
-    });
+    transition(DELETING, true);
+    cancelInterview(id)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch(() => {
+        transition(ERRORDELETING, true);
+      });
   }
 
   return (
@@ -66,6 +88,14 @@ export default function Appointment({
         />
       )}
       {mode === SAVING && <Status message={SAVING} />}
+      {mode === ERRORSAVING && (
+        <Error
+          message={ERRORSAVING}
+          onClose={event => {
+            back();
+          }}
+        />
+      )}
 
       {mode === SHOW && (
         <Show
@@ -100,6 +130,14 @@ export default function Appointment({
         />
       )}
       {mode === DELETING && <Status message={DELETING} />}
+      {mode === ERRORDELETING && (
+        <Error
+          message={ERRORDELETING}
+          onClose={event => {
+            back();
+          }}
+        />
+      )}
     </article>
   );
 }

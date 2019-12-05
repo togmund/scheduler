@@ -11,8 +11,6 @@ import {
   getByPlaceholderText,
   queryByText,
   waitForElementToBeRemoved,
-  getByDisplayValue,
-  prettyDOM,
   getByTestId
 } from "@testing-library/react";
 
@@ -108,9 +106,9 @@ describe("Form", () => {
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 
-  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     // Render the Application.
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     // Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -140,10 +138,10 @@ describe("Form", () => {
       queryByText(day, "Monday")
     );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
-    debug();
   });
 
   it("shows the save error when failing to save an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
     // Render the Application.
     const { container } = render(<Application />);
 
@@ -167,22 +165,16 @@ describe("Form", () => {
 
     // Click the "Save" button on that same appointment.
     fireEvent.click(getByText(appointment, "Save"));
-    axios.put.mockRejectedValueOnce();
 
     // Check that the element with the text "Saving" is displayed.
     expect(getByText(appointment, "SAVING")).toBeInTheDocument();
-
-    // Wait until the element with the text "Lydia Miller-Jones" is displayed.
-    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-
-    // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
-    const day = getAllByTestId(container, "day").find(day =>
-      queryByText(day, "Monday")
+    await waitForElement(() =>
+      getByText(container, "Could not save appointment.")
     );
-    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   });
 
   it("shows the delete error when failing to delete an appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
     // Render the Application.
     const { container } = render(<Application />);
 
@@ -198,18 +190,12 @@ describe("Form", () => {
 
     // Click the "Confirm" button on the confirmation.
     fireEvent.click(getByText(container, "Confirm"));
-    axios.put.mockRejectedValueOnce();
 
     // Check that the element with the text "DELETING" is displayed.
+
     expect(getByText(container, "DELETING")).toBeInTheDocument();
-
-    // Wait until the element with the text "DELETING" button is removed.
-    await waitForElementToBeRemoved(() => getByText(container, "DELETING"));
-
-    // Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
-    const day = getAllByTestId(container, "day").find(day =>
-      queryByText(day, "Monday")
+    await waitForElement(() =>
+      getByText(container, "Could not delete appointment.")
     );
-    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 });
