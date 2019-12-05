@@ -4,6 +4,8 @@ import "components/InterviewerListItem.scss";
 
 import classNames from "classnames";
 
+// Renders individual interviewer avatars in their
+// selected and unselected states
 export default function InterviewerListItem({
   name,
   avatar,

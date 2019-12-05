@@ -4,6 +4,8 @@ import "components/DayListItem.scss";
 
 import classNames from "classnames";
 
+// Renders individual days in their
+// selected and unselected states
 export default function DayListItem({ name, spots, selected, setDay }) {
   const dayClass = classNames("day-list__item", {
     "day-list__item--selected": selected,

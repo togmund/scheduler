@@ -7,6 +7,9 @@ import reducer, {
   SET_INTERVIEW
 } from "reducers/application";
 
+// The complex storage of state as an object for use in /components/Application.js
+// updated by way of the imported reducer.
+// Exported as a custom hook, used for maintaining and updating global state
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
@@ -15,6 +18,7 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
+  // Defines the promise to grab the current state from the database
   const refreshState = () => {
     Promise.all([
       axios.get("/api/days"),
@@ -35,6 +39,7 @@ export default function useApplicationData() {
   };
 
   useEffect(() => {
+    // Invokes the promise as a side effect
     refreshState();
   }, []);
 
@@ -45,7 +50,10 @@ export default function useApplicationData() {
       dispatch({ type: SET_DAY, day: day });
     },
 
+    // Function servese double duty, both booking and editing interviews
+    // edits denoted by an edit boolean which is defaulted to false
     bookInterview: function bookInterview(id, interview, edit = false) {
+      // Scaffolds out the new state contingent on the result of the upcoming promise
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
@@ -56,16 +64,20 @@ export default function useApplicationData() {
       };
       const days = [
         ...state.days.map(day => {
+          // only updates the count of spots for the day with the new appointment
+          // and only in cases where we are not editing an existing appointment
           if (day.appointments.includes(id) && !edit) {
             return { ...day, spots: day.spots - 1 };
           }
           return day;
         })
       ];
+      // Returns a promise that hits the database with the new appointment
       return Promise.all([
         axios.put(`/api/appointments/${id}`, { interview })
       ]).then(response => {
         if (response) {
+          // Dispatches a new state when the promise resolves
           dispatch({
             type: SET_INTERVIEW,
             appointments: appointments,
@@ -76,6 +88,7 @@ export default function useApplicationData() {
     },
 
     cancelInterview: function cancelInterview(id) {
+      // Scaffolds out the new state contingent on the result of the upcoming promise
       const appointment = {
         ...state.appointments[id],
         interview: null
@@ -92,9 +105,11 @@ export default function useApplicationData() {
           return day;
         })
       ];
+      // Returns a promise that hits the database with the request to delete appointment
       return Promise.all([axios.delete(`/api/appointments/${id}`)]).then(
         response => {
           if (response) {
+            // Dispatches a new state when the promise resolves
             dispatch({
               type: SET_INTERVIEW,
               appointments: appointments,

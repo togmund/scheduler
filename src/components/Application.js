@@ -10,6 +10,7 @@ import "components/Appointment";
 import "components/Application.scss";
 
 export default function Application(props) {
+  // Retrieves initial state from useApplicationData custom hook
   const {
     state,
     setDay,

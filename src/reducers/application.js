@@ -1,3 +1,7 @@
+// Exports a function to update state by way of a reducer
+// Given more time, would refactor to an object lookup
+// Takes in the current state, and a prescribed modification
+// Returns an updated state based on the modification
 export default function reducer(state, action) {
   switch (action.type) {
     case SET_DAY:

@@ -1,8 +1,4 @@
-import reducer, {
-  SET_DAY,
-  SET_APPLICATION_DATA,
-  SET_INTERVIEW
-} from "reducers/application";
+import reducer from "reducers/application";
 
 describe("Application Reducer", () => {
   it("thows an error with an unsupported type", () => {
