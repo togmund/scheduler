@@ -1,10 +1,6 @@
 import React from "react";
 
-// import classNames from 'classnames';
-
 export default function Status({ message }) {
-  // const buttonClass = classNames();
-
   return (
     <main className="appointment__card appointment__card--status">
       <img

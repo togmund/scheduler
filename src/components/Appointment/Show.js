@@ -1,10 +1,6 @@
 import React from "react";
 
-// import classNames from 'classnames';
-
 export default function Show({ student, interviewer, onEdit, onDelete }) {
-  // const buttonClass = classNames();
-
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">

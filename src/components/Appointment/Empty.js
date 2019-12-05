@@ -2,7 +2,7 @@ import React from "react";
 
 // import classNames from 'classnames';
 
-export default function Empty({onAdd}) {
+export default function Empty({ onAdd }) {
   // const buttonClass = classNames();
 
   return (
