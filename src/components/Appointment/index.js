@@ -73,7 +73,7 @@ export default function Appointment({
       <Header time={time} />
       {mode === EMPTY && (
         <Empty
-          onAdd={event => {
+          onAdd={() => {
             transition(CREATE);
           }}
         />
@@ -82,7 +82,7 @@ export default function Appointment({
         <Form
           interviewers={interviewers}
           onSave={save}
-          onCancel={event => {
+          onCancel={() => {
             back();
           }}
         />
@@ -91,7 +91,7 @@ export default function Appointment({
       {mode === ERRORSAVING && (
         <Error
           message={ERRORSAVING}
-          onClose={event => {
+          onClose={() => {
             back();
           }}
         />
@@ -101,10 +101,10 @@ export default function Appointment({
         <Show
           student={interview.student}
           interviewer={interview.interviewer}
-          onDelete={event => {
+          onDelete={() => {
             transition(CONFIRM);
           }}
-          onEdit={event => {
+          onEdit={() => {
             transition(EDIT);
           }}
         />
@@ -112,7 +112,7 @@ export default function Appointment({
       {mode === CONFIRM && (
         <Confirm
           message={CONFIRM}
-          onCancel={event => {
+          onCancel={() => {
             back();
           }}
           onConfirm={deleteInterview}
@@ -124,7 +124,7 @@ export default function Appointment({
           propCurrentInterviewerId={interview.interviewer.id}
           interviewers={interviewers}
           onSave={save}
-          onCancel={event => {
+          onCancel={() => {
             back();
           }}
         />
@@ -133,7 +133,7 @@ export default function Appointment({
       {mode === ERRORDELETING && (
         <Error
           message={ERRORDELETING}
-          onClose={event => {
+          onClose={() => {
             back();
           }}
         />
