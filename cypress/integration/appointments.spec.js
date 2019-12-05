@@ -33,7 +33,13 @@ describe("Appointments", () => {
     cy.get("@deleteButton")
       .invoke("show")
       .click();
-    cy.get("[alt=Confrim]").as("confirmButton");
-    cy.get("@@confirmButton").click();
+    cy.get(".button.button--danger")
+      .contains("Confirm")
+      .as("confirmButton")
+      .click();
+    cy.contains("DELETING").should("exist");
+    cy.contains("DELETING").should("not.exist");
+
+    cy.contains(".appointment__card--show", "Archie Cohen").should("not.exist");
   });
 });
