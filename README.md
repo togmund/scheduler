@@ -2,9 +2,7 @@
 
 A Single Page React application that allows users to book and cancel interviews.
 
-<video width="320" autoplay loop muted>
-  <source src="scheduler/public/images/demonstration.mov" type="video/mp4">
-</video>
+![Demonstration](https://raw.githubusercontent.com/togmund/togmund.github.io/master/images/9efcde3d-fc2b-4b07-a5d8-27165716f517.gif)
 
 ## Technical Specifications
 
