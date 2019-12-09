@@ -27,6 +27,14 @@ export default function Form({
   };
 
   const validate = () => {
+    if (!currentInterviewer && name === "") {
+      setError("Please make a selection");
+      return;
+    }
+    if (!currentInterviewer) {
+      setError("You must select an interviewer");
+      return;
+    }
     if (name === "") {
       setError("Student name cannot be blank");
       return;
